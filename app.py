@@ -6,7 +6,7 @@ app = Flask(__name__)
 app.config["MONGO_URI"] = "mongodb://localhost:27017/flask_demo"  # Replace with your MongoDB connection string
 mongo = PyMongo(app)
 
-app.secret_key = "your_secret_key"  # Replace with a strong, unique secret key
+app.secret_key = "VNhcuHax2HGs4FLHCmKr8HdzQQ6JOG5u"  # Replace with a strong, unique secret key
 
 @app.route("/", methods=["GET", "POST"])
 def login():

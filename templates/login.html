@@ -1,22 +1,31 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <link type="text/css" rel="stylesheet" href="/static/css/style.css"/>
     <title>Login</title>
 </head>
 <body>
-    <h1>Login</h1>
-    {% if error %}
-        <p style="color: red;">{{ error }}</p>
-    {% endif %}
-    <form method="POST">
-        <label for="username">Username:</label>
-        <input type="text" name="username" id="username" required><br><br>
 
-        <label for="password">Password:</label>
-        <input type="password" name="password" id="password" required><br><br>
+    <div>
+        <h1 class="app-header-text">My Web Application</h1>
+    </div>
+    
+    <div class="outlined-box-with-shadow auto-side-margin">
+        <h2 class="auto-side-margin fit-content">Login</h2>
+        {% if error %}
+            <p style="color: red;">{{ error }}</p>
+        {% endif %}
+        <form method="POST">
+            <label for="username">Username:</label>
+            <input type="text" name="username" id="username" required aria-label="Please enter your user name"><br><br>
 
-        <button type="submit">Login</button>
-    </form>
-    <p>Don't have an account? <a href="/signup">Sign Up</a></p>
+            <label for="password">Password:</label>
+            <input type="password" name="password" id="password" required aria-label="Please enter your password"><br><br>
+
+            <button type="submit" aria-label="Login to my app">Login</button>
+        </form>
+        <p>Don't have an account? <a href="/signup">Sign Up</a></p>
+    </div>
+
 </body>
 </html>

@@ -1,0 +1,23 @@
+.app-header-text {
+  font-size: 3em;
+  color: rgba(100, 100, 100, 50);
+  text-align: center;
+}
+
+.outlined-box-with-shadow {
+  margin-top: 10%;
+  width: fit-content;
+  border: 2px solid black;
+  border-radius: 16px;
+  padding: 6px;
+  box-shadow: rgba(100, 100, 100, 50) 6px 6px 6px;
+}
+
+.fit-content {
+  width: fit-content;
+}
+
+.auto-side-margin {
+  margin-left: auto;
+  margin-right: auto;
+}
