@@ -1,0 +1,22 @@
+<!-- templates/index.html -->
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link type="text/css" rel="stylesheet" href="/static/css/style.css"/>
+    <title>User List</title>
+  </head>
+  <body>
+    <div class="flex p-3 flex-col gap-3">
+      <h1>User List</h1>
+      <ul>
+        {% for user in users %}
+          <li>{{ user.username }} - {{ user.email }}</li>
+        {% endfor %}
+      </ul>
+      <a href="{{ url_for('add_user') }}">Add a new user</a>
+    </div>
+  </body>
+</html>
