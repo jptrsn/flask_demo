@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <link type="text/css" rel="stylesheet" href="/static/css/style.css"/>
+    <title>User Found</title>
+  </head>
+  <body>
+    <div class="p-6">
+      {% if user %}
+        <h1 class="text-xl">User Found</h1>
+        <form id="form">
+          <div>
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" value="{{ user.username }}" required>
+          </div>
+          <div>
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" value="{{ user.email }}" required>
+          </div>
+          <div>
+            <button type="submit">Update User</button>
+          </div>
+        </form>
+        <script>
+            function updateUser(event) {
+                
+                event.preventDefault();
+                const userId = {{ user.id }}
+                console.log('updateUser', event, userId);
+                const username = document.getElementById('username').value;
+                const email = document.getElementById('email').value;
+                fetch(`/update_user/${userId}`, {
+                  method: 'PUT',
+                  headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                  },
+                  body: `username=${username}&email=${email}`
+                })
+                .then(response => response.json())
+                .then(data => {
+                  if (data.message === 'User updated successfully') {
+                    alert('User updated successfully');
+                    window.location.href = '{{ url_for("index") }}';
+                  } else {
+                    alert('Error: ' + data.message);
+                  }
+                });
+            }
+            document.getElementById('form').addEventListener('submit', updateUser)
+          </script>
+      {% else %}
+        <p>User not found.</p>
+      {% endif %}
+      <a href="{{ url_for('index') }}">Back to User List</a>
+    </div>
+  </body>
+</html>
