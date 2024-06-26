@@ -10,25 +10,31 @@
             {% endblock %}
         </title>
         {% endblock %}
+        <link type="text/css" rel="stylesheet" href="/static/css/style.css"/>
     </head>
     <body>
+        
         <header>
             {% block pageHeader %}
-            <h1>My Really Cool App</h1>
+            <!-- <h1>My Really Cool App</h1> -->
             {% endblock %}
         </header>
+        
         {% block body %}
         <div>
             Welcome to the best app ever.
         </div>
         {% endblock %}
+
         <footer>
             {% block footer %}
             <div>Visit my github.</div>
             {% endblock %}
         </footer>
+        
         {% block scripts %}
         <script src="{{ url_for('static', filename='user-info.js')}}"></script>
         {% endblock %}
+
     </body>
 </html>
