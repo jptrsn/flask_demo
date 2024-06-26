@@ -1,21 +1,23 @@
 {% extends "base.html" %}
 {% block head %}
     {{ super() }}
-    <link type="text/css" rel="stylesheet" href="/static/css/style.css"/>
 {% endblock %}
 {% block title %}
     User List
 {% endblock %}
+{% block pageHeader %}
+  {{ super() }}
+{% endblock %}
 {% block body %}
-<div class="flex flex-row justify-center">
-  <div class="flex p-3 flex-col gap-3">
-    <h1 class="text-xl bold">User List</h1>
-    <ul class="text-base list-disc">
+<div>
+  <div>
+    <h1>User List</h1>
+    <ul>
       {% for user in users %}
         <user-info name="{{user.username}}" email="{{user.email}}"></user-info>
       {% endfor %}
     </ul>
-    <div class="flex flex-row gap-3 text-sm text-blue-gray-500 visited:text-blue-gray-900">
+    <div>
       <a href="{{ url_for('add_user') }}">Add a new user</a>
       <a href="{{ url_for('find_user') }}">Find a user</a>  
     </div>
