@@ -1,60 +1,54 @@
-from flask import Flask, render_template, request, redirect, url_for, session
-from flask_pymongo import PyMongo
-from werkzeug.security import generate_password_hash, check_password_hash
+# app.py
+
+from flask import Flask, render_template, request, redirect, url_for, jsonify
+from models import db, User
+from config import Config
 
 app = Flask(__name__)
-app.config["MONGO_URI"] = "mongodb://localhost:27017/flask_demo"  # Replace with your MongoDB connection string
-mongo = PyMongo(app)
+app.config.from_object(Config)
 
-app.secret_key = "VNhcuHax2HGs4FLHCmKr8HdzQQ6JOG5u"  # Replace with a strong, unique secret key
+# Initialize the database with the app
+db.init_app(app)
 
-@app.route("/", methods=["GET", "POST"])
-def login():
-    if request.method == "POST":
-        username = request.form["username"]
-        password = request.form["password"]
+# Create tables within the app context
+with app.app_context():
+    db.create_all()
 
-        user = mongo.db.users.find_one({"username": username})
+@app.route('/')
+def index():
+    users = User.query.all()
+    return render_template('index.html', users=users)
 
-        if user and check_password_hash(user["password"], password):
-            session["logged_in"] = True
-            session["username"] = username
-            return redirect(url_for("welcome"))
-        else:
-            return render_template("login.html", error="Invalid username or password")
+@app.route('/add_user', methods=['GET', 'POST'])
+def add_user():
+    if request.method == 'POST':
+        username = request.form['username']
+        email = request.form['email']
+        new_user = User(username=username, email=email)
+        db.session.add(new_user)
+        db.session.commit()
+        return redirect(url_for('index'))
+    return render_template('add_user.html')
 
-    return render_template("login.html")
+@app.route('/find_user', methods=['GET', 'POST'])
+def find_user():
+    user = None
+    if request.method == 'POST':
+        username = request.form['username']
+        # Search for the user in the database
+        user = User.query.filter_by(username=username).first()
+        return render_template('find_user.html', user=user)
+    return render_template('find_user_form.html')
 
-@app.route("/welcome")
-def welcome():
-    if "logged_in" in session and session["logged_in"]:
-        return render_template("welcome.html", username=session["username"])
-    else:
-        return redirect(url_for("login"))
+@app.route('/update_user/<int:user_id>', methods=['PUT'])
+def update_user(user_id):
+    user = User.query.get(user_id)
+    if user:
+        user.username = request.form['username']
+        user.email = request.form['email']
+        db.session.commit()
+        return jsonify({'message': 'User updated successfully'})
+    return jsonify({'message': 'User not found'}), 404
 
-@app.route("/signup", methods=["GET", "POST"])
-def signup():
-    if request.method == "POST":
-        username = request.form["username"]
-        password = request.form["password"]
-
-        hashed_password = generate_password_hash(password)
-
-        user = mongo.db.users.find_one({"username": username})
-
-        if user:
-            return render_template("signup.html", error="Username already exists")
-        else:
-            mongo.db.users.insert_one({"username": username, "password": hashed_password})
-            return redirect(url_for("login"))
-
-    return render_template("signup.html")
-
-@app.route("/logout")
-def logout():
-    session.pop("logged_in", None)
-    session.pop("username", None)
-    return redirect(url_for("login"))
-
-if __name__ == "__main__":
+if __name__ == '__main__':
     app.run(debug=True)

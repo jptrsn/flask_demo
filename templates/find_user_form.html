@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Find User</title>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Find User</h1>
+      <form method="POST" action="{{ url_for('find_user') }}">
+        <div>
+          <label for="username">Username:</label>
+          <input type="text" id="username" name="username" required>
+        </div>
+        <div>
+          <button type="submit">Find User</button>
+        </div>
+      </form>
+      <a href="{{ url_for('index') }}">Back to User List</a>
+    </div>
+  </body>
+</html>
