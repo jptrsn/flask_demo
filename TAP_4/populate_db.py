@@ -3,8 +3,7 @@ import string
 import argparse
 import os
 from sqlalchemy import create_engine, Column, Integer, String, Text
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import sessionmaker, declarative_base
 from faker import Faker
 
 
@@ -26,7 +25,7 @@ class User(Base):
         return f'<User {self.username}>'
 
 # Create a SQLite database connection
-engine = create_engine('sqlite:///' + os.path.join(basedir, 'app.db'), echo=True)
+engine = create_engine('sqlite:///' + os.path.join(basedir, 'app.db'))
 Base.metadata.create_all(engine)
 
 Session = sessionmaker(bind=engine)
