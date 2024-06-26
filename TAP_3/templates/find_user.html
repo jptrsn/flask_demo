@@ -1,0 +1,67 @@
+<html lang="en">
+    <head>
+        <!-- <link type="text/css" rel="stylesheet" href="/static/css/style.css"/> -->
+        <title>User Search Results</title>
+    </head>
+    <body>
+        <style>
+          .container {
+            padding: 12px;
+          }
+        </style>
+        <div class="container">
+          {% if user %}
+            <h1>User Found</h1>
+            <form id="updateUserForm">
+              <div>
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" value="{{ user.username }}" required>
+              </div>
+              <div>
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" value="{{user.email}}" required>
+              </div>
+              <div>
+                <button type="submit">Update User</button>
+              </div>
+            </form>
+            <script>
+
+              function updateUser(event) {
+                event.preventDefault();
+                const userId = {{ user.id }}
+                const username = document.getElementById("username").value;
+                const email = document.getElementById("email").value;
+
+                fetch(`/update_user/${userId}`, {
+                  method: 'PUT',
+                  headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                  },
+                  body: `username=${username}&email=${email}`
+                }).then((response) => {
+                  return response.json();
+                }).then((data) => {
+                  console.log('data', data);
+                  if (data.message === 'User updated successfully') {
+                    alert('User updated successfully');
+                    window.location.href = '{{ url_for("index")}}';
+                  } else {
+                    alert('Update failed: ' + data.message);
+                  }
+                })
+
+                console.log('update user function successfully executed');
+              }
+
+              const formElement = document.getElementById("updateUserForm");
+              formElement.addEventListener('submit', updateUser);
+
+            </script>
+          {% else %}
+            <p>User not found.</p>
+          {% endif %}
+          <a href="{{ url_for('index') }}">Back to User List</a>
+        </div>
+      </body>
+</html>

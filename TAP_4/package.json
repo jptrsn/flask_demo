@@ -1,0 +1,11 @@
+{
+  "devDependencies": {
+    "tailwindcss": "^3.4.3"
+  },
+  "scripts": {
+    "build-css": "npx tailwindcss -i ./static/src/input.css -o ./static/css/style.css --watch"
+  },
+  "dependencies": {
+    "@material-tailwind/html": "^2.2.2"
+  }
+}

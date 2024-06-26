@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        {% block head %}
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>
+            {% block title %}
+            My Awesome Flask Application
+            {% endblock %}
+        </title>
+        {% endblock %}
+    </head>
+    <body>
+        {% block body %}
+        <div>
+            Welcome to the best app ever.
+        </div>
+        {% endblock %}
+        {% block scripts %}
+        <script src="{{ url_for('static', filename='user-info.js')}}"></script>
+        {% endblock %}
+    </body>
+</html>
