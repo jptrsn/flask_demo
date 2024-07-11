@@ -2,10 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
-.app-header-text {
-  font-size: 3em;
-  color: rgba(100, 100, 100, 50);
-  text-align: center;
+.app-header {
+  display: flex;
+  padding: 16px;
+  background-color: lightblue;
+  justify-content: space-between;
 }
 
 .outlined-box-with-shadow {
